@@ -1,4 +1,7 @@
-# Copyright 2014 Google Inc. All rights reserved.
+#!/bin/bash
+# A small script that runs the linter on all files and python unit tests.
+#
+# Copyright 2015 Google Inc. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,4 +14,19 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""Timesketch datastores."""
+
+echo ""
+echo "* Run pylinter"
+utils/run_linter.sh
+if test $? -ne 0; then
+    exit 1
+fi
+echo ""
+echo "* Run python unit tests"
+nosetests --with-coverage --cover-package=timesketch
+rm .coverage
+if test $? -ne 0; then
+    exit 1
+fi
+echo "All good, go have a coffee!"
+echo ""

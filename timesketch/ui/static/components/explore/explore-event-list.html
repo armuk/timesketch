@@ -1,0 +1,42 @@
+<!--
+Copyright 2015 Google Inc. All rights reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<div class="row" ng-show="meta.noisy">
+    <div class="col-md-12">
+        <div class="card card-alert">
+            <h4>I will only show you the first 500 events</h4>
+            <p>May I suggest you narrow down the results with a filter?</p>
+        </div>
+    </div>
+</div>
+
+<div class="card" style="min-height:100px;">
+    <div class="pull-left" ng-show="meta" style="padding:10px;margin-bottom: 10px;">
+        {{ meta.es_total_count }} events ({{ meta.es_time/1000 }}s)
+    </div>
+
+    <div class="pull-right" ng-show="events.length">
+        <div class="btn-group" style="margin-left:10px;">
+            <button class="btn btn-default" ng-click="toggleAll()"><i class="fa fa-check"></i> Toggle all</button>
+            <button class="btn btn-default" ng-click="addStar()" ng-disabled="!anySelected"><i class="fa fa-star icon-yellow"></i> Add star</button>
+            <button class="btn btn-default" ng-click="removeStar()" ng-disabled="!anySelected"><i class="fa fa-star icon-grey"></i> Remove star</button>
+        </div>
+    </div>
+
+    <div ng-repeat="event in events">
+        <ts-event event="event" meta="meta" sketch-id="sketchId"></ts-event>
+    </div>
+</div>

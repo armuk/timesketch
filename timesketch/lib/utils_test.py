@@ -11,4 +11,17 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""Timesketch datastores."""
+"""Tests for utils."""
+
+import re
+
+from timesketch.lib.testlib import BaseTest
+from timesketch.lib.utils import random_color
+
+
+class TestUtils(BaseTest):
+    """Tests for the functionality on the utils module."""
+    def test_random_color(self):
+        """Test to generate a random color."""
+        color = random_color()
+        self.assertTrue(re.match(u'^[0-9a-fA-F]{6}$', color))

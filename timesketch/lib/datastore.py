@@ -11,23 +11,48 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""This is the main datastore abstraction."""
+"""Datastore abstraction."""
 
 import abc
 
+
 class DataStore(object):
-    """Abstract datastore access."""
+    """Abstract datastore."""
 
     __metaclass__ = abc.ABCMeta
 
-    @abc.abstractmethod 
-    def search(self, sketch, query, filters):
-        """Return search results"""
+    @abc.abstractmethod
+    def search(self, sketch_id, query, query_filter, indices):
+        """Return search results.
 
-    @abc.abstractmethod 
-    def get_single_event(self, event_id):
-        """Get singel document from the datastore"""
+        Args:
+            sketch_id: Integer of sketch primary key
+            query: Query string
+            query_filter: Dictionary containing filters to apply
+            indices = List of indices to query
+        """
 
-    @abc.abstractmethod 
-    def add_label_to_event(self, event, sketch, user, label, toggle=False):
-        """Add label to an event."""
+    @abc.abstractmethod
+    def get_event(self, searchindex_id, event_id):
+        """Get single event from the datastore.
+
+        Args:
+            searchindex_id: String of ElasticSearch index id
+            event_id: String of ElasticSearch event id
+        """
+
+    @abc.abstractmethod
+    def set_label(
+            self, searchindex_id, event_id, event_type, sketch_id, user_id,
+            label, toggle=False):
+        """Add label to an event.
+
+        Args:
+            searchindex_id: String of ElasticSearch index id
+            event_id: String of ElasticSearch event id
+            sketch_id: Integer of sketch primary key
+            user_id: Integer of user primary key
+            label: String with the name of the label
+            toggle: Optional boolean value if the label should be toggled
+            (add/remove). The default is False.
+        """
